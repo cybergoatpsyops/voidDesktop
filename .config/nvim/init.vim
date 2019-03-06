@@ -1,3 +1,5 @@
+let mapleader =","
+
 set title
 set ruler
 set showmatch
@@ -12,17 +14,19 @@ set backupcopy=yes
 
 set encoding=utf-8
 
-
+" Whitespace and tabs
 set list listchars=nbsp:¬,tab:»·,trail:·,extends:>
-set shiftwidth=4
-set softtabstop=4
-set tabstop=4
+set shiftwidth=8
+set softtabstop=8
+set tabstop=8
+
 
 set background=dark
 
 set undofile
 set undodir=/tmp
-
+set cindent
+" set autoindent
 syntax on
 filetype plugin indent on
 set nofoldenable
@@ -61,12 +65,24 @@ Plug 'junegunn/fzf'
 Plug 'ervandew/supertab'
 
 " Vim start screen
-Plug 'mhinz/vim-startify'
+" Plug 'mhinz/vim-startify'
 
-" Distraction-free writing
-Plug 'junegunn/goyo.vim'
+" Clang based syntax highlighting
+Plug 'arakashic/chromatica.nvim'
+
+" Delete all the buffers except the current/named buffer
+Plug 'vim-scripts/BufOnly.vim'
+
+" A tree explorer 
+Plug 'scrooloose/nerdtree'
+
+
 
 call plug#end()
+
+" Choromatica Clang highlighting
+let g:chromatica#enable_at_startup=1
+let g:chromatica#responsive_mode=1
 
 let g:airline_powerline_fonts = 1
 
@@ -76,5 +92,14 @@ set wildmenu
 " restore cursor position when reopening a file
 autocmd BufReadPost * call setpos(".", getpos("'\""))
 
-" Disables automatic commenting on newline:
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+" Syntastic configs
+let g:syntastic_check_on_open = 1
+let g:syntastic_c_checkers = ["gcc"]
+nmap <leader>sc :SyntasticCheck gcc<CR>
+
+
+set diffopt+=iwhite " Ignore whitespace whilst diffing
+nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+
+
