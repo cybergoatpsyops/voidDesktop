@@ -96,7 +96,9 @@ autocmd BufReadPost * call setpos(".", getpos("'\""))
 " Syntastic configs
 let g:syntastic_check_on_open = 1
 let g:syntastic_c_checkers = ["gcc"]
-nmap <leader>sc :SyntasticCheck gcc<CR>
+let g:syntastic_python_flake8 = ["flake8"]
+nmap <leader>scc :SyntasticCheck gcc<CR>
+nmap <leader>scp :SyntasticCheck flake8<CR>
 
 
 set diffopt+=iwhite " Ignore whitespace whilst diffing
